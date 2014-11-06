@@ -4,6 +4,12 @@ from flask.ext.login import UserMixin
 from database import Base
 
 
+brewers_table = Table('association', Base.metadata, 
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('beer_id', Integer, ForeignKey('beers.id'))
+)
+
+
 class User(UserMixin, Base):
     __tablename__ = 'users'
 
@@ -13,7 +19,7 @@ class User(UserMixin, Base):
     password = Column(String)
     phone = Column(String)
 
-    brewers = relationship('Brewer', backref='user', lazy='dynamic')    
+    brewers = relationship('Beer', secondary=brewers_table)    
 
 
 class Beer(Base):
@@ -22,21 +28,3 @@ class Beer(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     style = Column(String)
-
-    user_id = Column(Integer, ForeignKey('users.id')
-
-"""
-
-class Brewer(Base):
-    __tablename__ = 'brewers'
-
-    id = Column(Integer, primary_key=True)
-
-"""
-
-
-    
-    
-    
-
-
