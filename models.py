@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Table, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Table
+from sqlalchemy import Boolean, DateTime
 from sqlalchemy.orm import relationship, backref
 from flask.ext.login import UserMixin
 from database import Base

@@ -52,3 +52,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Additional ignores
+bin/
+include/
+*.py.swp

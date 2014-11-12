@@ -1,5 +1,5 @@
 from database import init_db, db_session
-from models import *
+from models import User, Beer, brewers_table
 import datetime
 import unittest
 
