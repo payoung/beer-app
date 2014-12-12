@@ -1,5 +1,5 @@
 from database import init_db, db_session
-from models import User, Beer, brewers_table
+from models import User, Beer, Brewer
 import datetime
 import unittest
 
@@ -21,11 +21,11 @@ class TestCase(unittest.TestCase):
         b2 = Beer(name="Orca Porter", style = "Porter");
 
         # Add brewers to beers
-        u1.brewers.append(b1)
-        u2.brewers.append(b1)
-        u1.brewers.append(b2)
+        brewer1 = Brewer(user=u1, beer=b1)
+        brewer2 = Brewer(user=u2, beer=b1)
+        brewer3 = Brewer(user=u1, beer=b2)
 
-        db_session.add_all([u1, u2, b1, b2])
+        db_session.add_all([u1, u2, b1, b2, brewer1, brewer2, brewer3])
         db_session.commit()
         print "****Data Has Been Commited to DB****"
 
@@ -36,23 +36,20 @@ class TestCase(unittest.TestCase):
         print "User Name: ", user1.name, "User Email: ", user1.email
 
 
-    def test_query2(self):
-	    #Pull a List of Brewers for a particular beer
-        beer1 = db_session.query(User).filter_by(name="Orca Porter").first()
-        brewers1 = db_session.query(brewers_table).all()
-        for b in brewers1:
-            print b.user_id
+    def test_query2(sxelf):
+	    #Pull a List of Breers for a particular User
+        user1 = db_session.query(User).filter_by(name='Paul').first()
+        for b in user1.beers:
+            print b.name
 
 
     def test_query3(self):
-        #Pull results from a search
-        """
-        search1 = db_session.query(Alert).filter_by(name='guitars').first()
-        results = db_session.query(Result).filter_by(alert=search1).all()
-        for result in results:
-            print "Result Title: ", result.title, "Result link: ", result.link
-        """
-        pass
+        #Pull a List of Brewers for a particular beer
+        beer1 = db_session.query(Beer).filter_by(name="Chaisoin").first()
+        print "Beer Name: ", beer1.name
+        for u in beer1.brewers:
+            print u.name
+            
 
     def tearDown(self):
         db_session.remove()
