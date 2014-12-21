@@ -27,7 +27,7 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
         try:
             data = json.loads(self.request.recv(1024).strip())
             # process the data, i.e. print it:
-            with open('temp.json', 'w') as outfile:
+            with open('temp.json', 'a') as outfile:
                 json.dump(data, outfile)
             print data
             # send some 'ok' back
