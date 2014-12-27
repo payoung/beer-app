@@ -30,7 +30,7 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
             # save data to file
             with open('temp.csv', 'ab') as outfile:
                 writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
-                writer.writerows(data.values())
+                writer.writerow(data.values())
             # for easier access, saving the last data point to seperate file
             with open('lasttemp.json', 'w') as outfile:
                 json.dump(data, outfile)
