@@ -6,6 +6,7 @@ default port 1313, use -p to change
 import SocketServer
 import json
 import sys, getopt
+import csv
 
 
 def get_args(argv):
@@ -27,8 +28,9 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
         try:
             data = json.loads(self.request.recv(1024).strip())
             # save data to file
-            with open('temp.json', 'ab') as outfile:
-                outfile.writelines(data)
+            with open('temp.csv', 'ab') as outfile:
+                writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+                writer.writerows(data.values())
             # for easier access, saving the last data point to seperate file
             with open('lasttemp.json', 'w') as outfile:
                 json.dump(data, outfile)
