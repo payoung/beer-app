@@ -27,7 +27,7 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
         try:
             data = json.loads(self.request.recv(1024).strip())
             # save data to file
-            with open('temp.json', 'a') as outfile:
+            with open('temp.json', 'ab') as outfile:
                 json.dump(data, outfile)
             # for easier access, saving the last data point to seperate file
             with open('lasttemp.json', 'w') as outfile:
