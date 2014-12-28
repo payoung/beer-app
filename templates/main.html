@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Flot Examples: Basic Usage</title>
+	<link href="http://www.flotcharts.org/flot/examples/examples.css" rel="stylesheet" type="text/css">
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/excanvas.min.js"></script><![endif]-->
+	<script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/jquery.flot.js"></script>
+	<script type="text/javascript">
+
+	$(function() {
+
+		var d1 = {{ tempdata }};
+
+		$.plot("#placeholder", [ d1 ]);
+
+	});
+
+	</script>
+</head>
+<body>
+
+	<div id="header">
+		<h2>Fermentation Temperature Logger</h2>
+	</div>
+
+	<div id="content">
+
+		<div class="demo-container">
+			<div id="placeholder" class="demo-placeholder"></div>
+		</div>
+
+		<p>An example plot of the fermentation temperature logger</p>
+
+		<p>Currently the temperature sensor is not hooked up to an active fermentation, it is just monitoring ambient temperature in the kitchen</p>
+
+	</div>
+
+</body>
+</html>
