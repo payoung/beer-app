@@ -58,3 +58,5 @@ bin/
 include/
 *.py.swp
 local/
+temp.csv
+temp.json
