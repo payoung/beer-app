@@ -27,14 +27,12 @@
 			},
 			xaxis: {
 				mode: "time",
-				// zoomRange: [1, {{ max_x_axis}}],
 				zoomRange: [600000, null],
 				panRange: [{{ min_x_axis }}, {{ max_x_axis }}]
 			},
 			yaxis: {
-				// zoomRange: [1, 120],
 				zoomRange: [2, null],
-				panRange: [55, 80]
+				panRange: [{{ min_y_axis }}, {{ max_y_axis }}]
 			},
 			zoom: {
 				interactive: true

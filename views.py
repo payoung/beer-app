@@ -42,8 +42,14 @@ def what_is_the_temp():
     # Get the max datetime, rounded up, to set the plot x-axis range
     max_time = tempdata[-1][0]
     max_x_axis = rndup(max_time, len(str(max_time))-7)  # Returns the max time rounded up
+    # Get the max and  min temperatures for axis min/max setting
+    min_temp = min(tempdata, key=lambda x: x[1])[1]
+    min_y_axis = rnddown(min_temp, 1)
+    max_temp = max(tempdata, key=lambda x: x[1])[1]
+    max_y_axis = rndup(max_temp, 1)
     return render_template('main.html', tempdata=tempdata, 
-                           max_x_axis=max_x_axis, min_x_axis=min_x_axis)
+                           max_x_axis=max_x_axis, min_x_axis=min_x_axis,
+                           max_y_axis=max_y_axis, min_y_axis=min_y_axis)
 
 
 if __name__ == '__main__':
