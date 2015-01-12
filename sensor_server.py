@@ -28,7 +28,7 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
         try:
             data = json.loads(self.request.recv(1024).strip())
             # save data to file
-            with open('temp.csv', 'ab') as outfile:
+            with open('temp1.csv', 'ab') as outfile:
                 writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
                 writer.writerow(data.values())
             # for easier access, saving the last data point to seperate file

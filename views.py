@@ -17,6 +17,7 @@ def rndup(num, n_power):
     """ Round up to the 10**n power """
     return num - (num % -10**n_power)
 
+
 def rnddown(num, n_power):
     """ Round down to the 10**n power """
     return num - (num % 10**n_power)
@@ -26,13 +27,12 @@ def js_time(dt_str):
     """ Convert datetime string to javasctipt compatible datetime format """
     fmt = '%Y-%m-%d %H:%M:%S.%f'  # format of csv datetime string
     return int(time.mktime(datetime.strptime(dt_str, fmt).timetuple())*1000)
+    
 
-
-@app.route('/')
-def what_is_the_temp():
+def what_is_the_temp(page, csvfile):
     """ return temperature """
     tempdata = []
-    with open('temp.csv', 'rb') as csvfile:
+    with open(csvfile, 'rb') as csvfile:
         tempreader = csv.reader(csvfile, delimiter=',')
         for row in tempreader:
             tempdata.append([js_time(row[1]), c_to_f(float(row[0]))])
@@ -47,9 +47,21 @@ def what_is_the_temp():
     min_y_axis = rnddown(min_temp, 1)
     max_temp = max(tempdata, key=lambda x: x[1])[1]
     max_y_axis = rndup(max_temp, 1)
-    return render_template('main.html', tempdata=tempdata, 
+    return render_template(page, tempdata=tempdata, 
                            max_x_axis=max_x_axis, min_x_axis=min_x_axis,
                            max_y_axis=max_y_axis, min_y_axis=min_y_axis)
+
+
+@app.route('/')
+def home_page():
+    """ return current beer ferm """
+    return what_is_the_temp('main1.html', 'temp1.csv')
+
+
+@app.route('/test')
+def test_page():
+    """ return the initial tes page """
+    return what_is_the_temp('main.html', 'temp.csv')
 
 
 if __name__ == '__main__':
