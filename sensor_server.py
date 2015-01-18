@@ -27,13 +27,13 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         try:
             data = json.loads(self.request.recv(1024).strip())
+            print data
             # save data to file
             for key, val in data['temp data']:
                 fname = data['unit_id'] + key +'.csv'
                 with open(fname, 'ab') as outfile:
                     writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
                     writer.writerow([data['datetime'], val])
-            print data
             # send some 'ok' back
             self.request.sendall(json.dumps({'return':'ok'}))
         except Exception, e:
