@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Beer Fermentation Logger</title>
+	<link href="http://www.flotcharts.org/flot/examples/examples.css" rel="stylesheet" type="text/css">
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/excanvas.min.js"></script><![endif]-->
+	<script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/jquery.flot.navigate.js"></script>
+	<script language="javascript" type="text/javascript" src="http://www.flotcharts.org/flot/jquery.flot.time.js"></script>
+	<script type="text/javascript">
+
+	$(function() {
+
+		var d1 = {{ tempdata1 }};
+
+		var d2 = {{ tempdata2 }}
+
+		var data = [ d1, d2 ],
+			placeholder = $("#placeholder");
+
+		var plot = $.plot(placeholder, data, {
+			series: {
+				lines: {
+					show: true
+				},
+				shadowSize: 0
+			},
+			xaxis: {
+				mode: "time",
+				zoomRange: [600000, null],
+				panRange: [{{ min_x_axis }}, {{ max_x_axis }}]
+			},
+			yaxis: {
+				zoomRange: [2, null],
+				panRange: [{{ min_y_axis }}, {{ max_y_axis }}]
+			},
+			zoom: {
+				interactive: true
+			},
+			pan: {
+				interactive: true
+			}
+		});
+
+
+	});
+
+	</script>
+</head>
+<body>
+
+	<div id="header">
+		<h2>Single Hop (Cascade) Pale Ale</h2>
+	</div>
+
+	<div id="content">
+
+		<div class="demo-container">
+			<div id="placeholder" class="demo-placeholder"></div>
+		</div>
+
+		<em>This plot shows the temperature recorded by two temp sensors hooked up to an arduino.  The temperatures are sent and recorded approximately once per minute, and the data is displayed here using Flask and Flot. You can zoom in and out of the chart area using your mouse wheel and click-and-drag.</em>
+
+		<p>Currently the temperature sensors are hooked up to a five gallon batch of an imperial stout.  One sensor is attached to teh fermentation bicket, with some foam insulation on the back, and the other temperature sensor is recording the ambient conditions.</p>
+
+		<p>To see previous fermentation profiles, see the links below:</p>
+
+		<li><a href="{{ url_for('cascade_page') }}">Single Hop Cascade</a></li>
+
+		<li><a href="{{ url_for('test_page') }}">Test Profile</a></li>
+
+	</div>
+
+</body>
+</html>
