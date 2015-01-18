@@ -29,7 +29,7 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
             data = json.loads(self.request.recv(1024).strip())
             print data
             # save data to file
-            for key, val in data['temp data']:
+            for key, val in data['temp data'].iteritems():
                 fname = data['unit_id'] + key +'.csv'
                 with open(fname, 'ab') as outfile:
                     writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
