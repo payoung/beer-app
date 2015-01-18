@@ -28,12 +28,11 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
         try:
             data = json.loads(self.request.recv(1024).strip())
             # save data to file
-            with open('temp1.csv', 'ab') as outfile:
-                writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
-                writer.writerow(data.values())
-            # for easier access, saving the last data point to seperate file
-            with open('lasttemp.json', 'w') as outfile:
-                json.dump(data, outfile)
+            for key, val in data['temp data']:
+                fname = data['unit_id'] + key +'.csv'
+                with open(fname, 'ab') as outfile:
+                    writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+                    writer.writerow([data['datetime'], val])
             print data
             # send some 'ok' back
             self.request.sendall(json.dumps({'return':'ok'}))
