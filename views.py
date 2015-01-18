@@ -52,8 +52,45 @@ def what_is_the_temp(page, csvfile):
                            max_y_axis=max_y_axis, min_y_axis=min_y_axis)
 
 
+def what_is_the_temp2(page, csvfile1, csvfile2):
+    """ return temperature """
+    tempdata1 = []
+    with open(csvfile1, 'rb') as csvfile1:
+        tempreader = csv.reader(csvfile1, delimiter=',')
+        for row in tempreader:
+            tempdata1.append([js_time(row[0]), c_to_f(float(row[1]))])
+    tempdata2 = []
+    with open(csvfile2, 'rb') as csvfile2:
+        tempreader = csv.reader(csvfile2, delimiter=',')
+        for row in tempreader:
+            tempdata2.append([js_time(row[0]), c_to_f(float(row[1]))])
+    # Get the min datetime, rounded down, to set the plot x-axis range
+    min_time = tempdata1[0][0]
+    min_x_axis = rnddown(min_time, len(str(min_time))-7) 
+    # Get the max datetime, rounded up, to set the plot x-axis range
+    max_time = tempdata1[-1][0]
+    max_x_axis = rndup(max_time, len(str(max_time))-7)  # Returns the max time rounded up
+    # Get the max and  min temperatures for axis min/max setting
+    min_temp = min(tempdata1, key=lambda x: x[1])[1]
+    min_y_axis = rnddown(min_temp, 1)
+    max_temp = max(tempdata1, key=lambda x: x[1])[1]
+    max_y_axis = rndup(max_temp, 1)
+    return render_template(page, tempdata1=tempdata1, tempdata2=tempdata2,
+                           max_x_axis=max_x_axis, min_x_axis=min_x_axis,
+                           max_y_axis=max_y_axis, min_y_axis=min_y_axis)
+
+
+
 @app.route('/')
 def home_page():
+    """ return current beer ferm """
+    return what_is_the_temp2('main2.html',
+                             'pauls-house28FF1F51601441F.csv',
+                             'pauls-house28FFC81D60144E2.csv')
+
+
+@app.route('/cascade')
+def cascade_page():
     """ return current beer ferm """
     return what_is_the_temp('main1.html', 'temp1.csv')
 
