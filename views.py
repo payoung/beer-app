@@ -71,9 +71,11 @@ def what_is_the_temp2(page, csvfile1, csvfile2):
     max_time = tempdata1[-1][0]
     max_x_axis = rndup(max_time, len(str(max_time))-7)  # Returns the max time rounded up
     # Get the max and  min temperatures for axis min/max setting
-    min_temp = min(tempdata1, key=lambda x: x[1])[1]
+    min_temp = min(min(tempdata1, key=lambda x: x[1])[1],
+                   min(tempdata2, key=lambda x: x[1])[1]) 
     min_y_axis = rnddown(min_temp, 1)
-    max_temp = max(tempdata1, key=lambda x: x[1])[1]
+    max_temp = max(max(tempdata1, key=lambda x: x[1])[1],
+                   max(tempdata2, key=lambda x: x[1])[1])
     max_y_axis = rndup(max_temp, 1)
     return render_template(page, tempdata1=tempdata1, tempdata2=tempdata2,
                            max_x_axis=max_x_axis, min_x_axis=min_x_axis,
