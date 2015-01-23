@@ -35,7 +35,7 @@ def what_is_the_temp(page, csvfile):
     with open(csvfile, 'rb') as csvfile:
         tempreader = csv.reader(csvfile, delimiter=',')
         for row in tempreader:
-            tempdata.append([js_time(row[1]), c_to_f(float(row[0]))])
+            tempdata.append([js_time(row[0]), c_to_f(float(row[1]))])
     # Get the min datetime, rounded down, to set the plot x-axis range
     min_time = tempdata[0][0]
     min_x_axis = rnddown(min_time, len(str(min_time))-7) 
