@@ -90,12 +90,19 @@ def home_page():
                              'pauls-house28FF1F51601441F.csv',
                              'pauls-house28FFC81D60144E2.csv')
 
+@app.route('/')
+def sorachi_page():
+    """ return current beer ferm """
+    return what_is_the_temp2('main3.html',
+                             'katies-kitchen-sensor2882E92D6008F.csv',
+                             'katies-kitchen-sensor28FFEB6760144E7.csv')
+
 
 @app.route('/cascade')
 def cascade_page():
     """ return current beer ferm """
     return what_is_the_temp('main1.html', 
-                            'katies-kitchen-sensor2882E92D6008F.csv')
+                            'katies-kitchen-sensor2882E92D6008F_cascade.csv')
 
 
 @app.route('/test')
