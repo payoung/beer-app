@@ -86,9 +86,17 @@ def what_is_the_temp2(page, csvfile1, csvfile2):
 @app.route('/')
 def home_page():
     """ return current beer ferm """
-    return what_is_the_temp2('main2.html',
+    return what_is_the_temp2('main4.html',
                              'pauls-house28FF1F51601441F.csv',
                              'pauls-house28FFC81D60144E2.csv')
+
+@app.route('/imperial')
+def ip_page():
+    """ return current beer ferm """
+    return what_is_the_temp2('main2.html',
+                             'pauls-house-ip1.csv',
+                             'pauls-house-ip2.csv')
+
 
 @app.route('/sorachi')
 def sorachi_page():

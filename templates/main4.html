@@ -54,7 +54,7 @@
 
 	<div id="header">
 		<h2>Beer Fermentation Temperature Monitor</h2>
-		<h2>Imperial Stout</h2>
+		<h2>Honey Ale</h2>
 	</div>
 
 
@@ -67,14 +67,13 @@
 
 		<em>This plot shows the temperature recorded by two temp sensors hooked up to an arduino.  The temperatures are sent and recorded approximately once per minute, and the data is displayed here using Flask and Flot. You can zoom in and out of the chart area using your mouse wheel and click-and-drag.</em>
 
-		<p>Currently the temperature sensors are hooked up to a five gallon batch of an Imperial Stout.  One sensor is attached to the fermentation bucket, with some foam insulation on the back, and the other temperature sensor is recording the ambient conditions.</p>
+		<p>Currently the temperature sensors are hooked up to a five gallon batch of an honey ale.  One sensor is attached to the fermentation bucket, with some foam insulation on the back, and the other temperature sensor is recording the ambient conditions.</p>
 
 		<p>To see other fermentation profiles, see the links below:</p>
 
-
-		<li><a href="{{ url_for('home_page') }}">Honey Ale</a></li>
-
 		<li><a href="{{ url_for('sorachi_page') }}">Single Hop Sorachi</a></li>
+
+		<li><a href="{{ url_for('ip_page') }}">Imperial Stout</a></li>
 
 		<li><a href="{{ url_for('cascade_page') }}">Single Hop Cascade</a></li>
 
