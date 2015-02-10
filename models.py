@@ -14,66 +14,61 @@ class User(UserMixin, Base):
     password = Column(String)
     phone = Column(String)
 
-    beers = relationship('Beer', secondary='brewers')    
+    sensorunits = relationship('SensorUnit', backref='users')
 
 
-class Beer(Base):
-    __tablename__ = 'beers'
+class SensorUnit(Base):
+    __tablename__ = 'sensorunits'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    style = Column(String)
 
-    brewers = relationship(User, secondary='brewers')
-    recipes = relationship("Recipe", backref="beer")
+    user_id = Column(Integer, ForeignKey('users.id'))
+    sensors = relationship('Sensor', backref='sensorunits') 
 
 
-class Brewer(Base):
-    __tablename__ = 'brewers'
-
-    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-    beer_id = Column(Integer, ForeignKey('beers.id'), primary_key=True)
-    user = relationship(User, backref=backref('users'))
-    beer = relationship(Beer, backref=backref('beers'))
-
-class Recipe(Base):
-    __tablename__ = 'recipes'
+class Sensor(Base):
+    __tablename__ = 'sensors'
 
     id = Column(Integer, primary_key=True)
-    steep_time = Column(Integer)
-    boil_time = Column(Integer)
-    brew_date = Column(Date)
-    secondary_date = Column(Date)
-    bottle_date = Column(Date)
+    name = Column(String)
+    dt_created = Column(DateTime)
+    active = Column(Boolean)
 
-    beer_id = Column(Integer, ForeignKey('beers.id'))
-    malts = relationship("Malt", backref="recipe")
-    hops = relationship("Hop", backref="recipe")
+    sensorunit_id = Column(Integer, ForeignKey('sensorunits.id'))
+    profiles = relationship('Profile', secondary='sensortable')
 
 
-
-class Malt(Base):
-    __tablename__ = 'malts'
+class Profile(Base):
+    __tablename_ = 'profiles'
 
     id = Column(Integer, primary_key=True)
-    variety = Column(String)
-    weight = Column(Float)
-    lbs_kg = Column(Boolean)
-    milled = Column(Boolean)
-    notes = Column(String)
+    name = Column(String)
+    dt_created = Column(DateTime)
+    num_sensors = Column(Integer)
+    active = Column(Boolean)
+    dt_stopped = Column(Integer)
 
-    recipe_id = Column(Integer, ForeignKey("recipes.id"))
+    sensors = relationship('Sensor', secondary='sensortable')
+    notes = relationship('ProfileNote', backref='profile_notes')
 
 
-class Hop(Base):
-    __tablename__ = 'hops'
+class SensorTable(Base):
+    """ Association table between sensors and profiles"""
+    __tablename__ = 'sensortable'
+
+    sensor_id = Column(Integer, ForeignKey('sensors.id'), primary_key=True)
+    profile_id = Column(Integer, ForeignKey('profiles.id'), primary_key=True)
+    sensor = relationship(Sensor, backref='sensors')
+    profile = relationship(Profile, backref='profiles')
+
+
+class ProfileNote(Base):
+    __tablename__ = 'profile_notes'
 
     id = Column(Integer, primary_key=True)
-    variety = Column(String)
-    addition_time = Column(Integer)
-    weight = Column(Float)
-    oz_grams = Column(Boolean)
-    fresh = Column(Boolean)
-    notes = Column(String)    
+    dt_created = Column(DateTime)
+    dt_applied = Column(DateTime)
+    note = Column(String)
 
-    recipe_id = Column(Integer, ForeignKey("recipes.id"))
+    profile_id = Column(Integer, ForeignKey('profiles.id'))
