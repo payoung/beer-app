@@ -62,8 +62,7 @@ def what_is_the_temp2(page, csvfile1, csvfile2):
     tempdata2 = []
     with open(csvfile2, 'rb') as csvfile2:
         tempreader = csv.reader(csvfile2, delimiter=',')
-        for row in tempreader:ls
-        ls
+        for row in tempreader:
             tempdata2.append([js_time(row[0]), c_to_f(float(row[1]))])
     # Get the min datetime, rounded down, to set the plot x-axis range
     min_time = tempdata1[0][0]
@@ -81,7 +80,6 @@ def what_is_the_temp2(page, csvfile1, csvfile2):
     return render_template(page, tempdata1=tempdata1, tempdata2=tempdata2,
                            max_x_axis=max_x_axis, min_x_axis=min_x_axis,
                            max_y_axis=max_y_axis, min_y_axis=min_y_axis)
-
 
 
 @app.route('/')
