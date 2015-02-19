@@ -52,7 +52,7 @@ def what_is_the_temp(page, csvfile):
                            max_y_axis=max_y_axis, min_y_axis=min_y_axis)
 
 
-def what_is_the_temp2(page, csvfile1, csvfile2):ton
+def what_is_the_temp2(page, csvfile1, csvfile2):
     """ return temperature """
     tempdata1 = []
     with open(csvfile1, 'rb') as csvfile1:
