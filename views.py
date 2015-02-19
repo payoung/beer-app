@@ -52,7 +52,7 @@ def what_is_the_temp(page, csvfile):
                            max_y_axis=max_y_axis, min_y_axis=min_y_axis)
 
 
-def what_is_the_temp2(page, csvfile1, csvfile2):
+def what_is_the_temp2(page, csvfile1, csvfile2):ton
     """ return temperature """
     tempdata1 = []
     with open(csvfile1, 'rb') as csvfile1:
@@ -62,7 +62,8 @@ def what_is_the_temp2(page, csvfile1, csvfile2):
     tempdata2 = []
     with open(csvfile2, 'rb') as csvfile2:
         tempreader = csv.reader(csvfile2, delimiter=',')
-        for row in tempreader:
+        for row in tempreader:ls
+        ls
             tempdata2.append([js_time(row[0]), c_to_f(float(row[1]))])
     # Get the min datetime, rounded down, to set the plot x-axis range
     min_time = tempdata1[0][0]

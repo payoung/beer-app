@@ -14,7 +14,7 @@ class User(UserMixin, Base):
     password = Column(String)
     phone = Column(String)
 
-    sensorunits = relationship('SensorUnit', backref='users')
+    sensorunits = relationship('SensorUnit', backref='user')
 
 
 class SensorUnit(Base):
@@ -24,7 +24,7 @@ class SensorUnit(Base):
     name = Column(String)
 
     user_id = Column(Integer, ForeignKey('users.id'))
-    sensors = relationship('Sensor', backref='sensorunits') 
+    sensors = relationship('Sensor', backref='sensorunit') 
 
 
 class Sensor(Base):
@@ -40,7 +40,7 @@ class Sensor(Base):
 
 
 class Profile(Base):
-    __tablename_ = 'profiles'
+    __tablename__ = 'profiles'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -48,9 +48,10 @@ class Profile(Base):
     num_sensors = Column(Integer)
     active = Column(Boolean)
     dt_stopped = Column(Integer)
+    description = Column(String)
 
     sensors = relationship('Sensor', secondary='sensortable')
-    notes = relationship('ProfileNote', backref='profile_notes')
+    notes = relationship('ProfileNote', backref='profile_note')
 
 
 class SensorTable(Base):
@@ -59,8 +60,9 @@ class SensorTable(Base):
 
     sensor_id = Column(Integer, ForeignKey('sensors.id'), primary_key=True)
     profile_id = Column(Integer, ForeignKey('profiles.id'), primary_key=True)
-    sensor = relationship(Sensor, backref='sensors')
-    profile = relationship(Profile, backref='profiles')
+    sensor = relationship(Sensor, backref='sensor')
+    profile = relationship(Profile, backref='profile')
+    label = Column(String) # label for sensor, i.e. ambient vs fermentation
 
 
 class ProfileNote(Base):
