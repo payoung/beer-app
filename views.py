@@ -27,15 +27,21 @@ def js_time(dt_str):
     """ Convert datetime string to javasctipt compatible datetime format """
     fmt = '%Y-%m-%d %H:%M:%S.%f'  # format of csv datetime string
     return int(time.mktime(datetime.strptime(dt_str, fmt).timetuple())*1000)
+
+
+def get_csv_data(csvfile):
+    """ return csv data in a list of list format """
+    csvdata = []
+    with open(csvfile, 'rb') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter=',')
+        for row in csvreader:
+            csvdata.append([js_time(row[0]), c_to_f(float(row[1]))])
+    return csvdata
     
 
 def what_is_the_temp(page, csvfile):
     """ return temperature """
-    tempdata = []
-    with open(csvfile, 'rb') as csvfile:
-        tempreader = csv.reader(csvfile, delimiter=',')
-        for row in tempreader:
-            tempdata.append([js_time(row[0]), c_to_f(float(row[1]))])
+    tempdata = get_csv_data(csvfile)
     # Get the min datetime, rounded down, to set the plot x-axis range
     min_time = tempdata[0][0]
     min_x_axis = rnddown(min_time, len(str(min_time))-7) 
@@ -54,17 +60,8 @@ def what_is_the_temp(page, csvfile):
 
 def what_is_the_temp2(page, csvfile1, csvfile2):
     """ return temperature """
-    tempdata1 = []
-    with open(csvfile1, 'rb') as csvfile1:
-        tempreader = csv.reader(csvfile1, delimiter=',')
-        for row in tempreader:
-            tempdata1.append([js_time(row[0]), c_to_f(float(row[1]))])
-    tempdata2 = []
-    with open(csvfile2, 'rb') as csvfile2:
-        tempreader = csv.reader(csvfile2, delimiter=',')
-        for row in tempreader:ls
-        ls
-            tempdata2.append([js_time(row[0]), c_to_f(float(row[1]))])
+    tempdata1 = get_csv_data(csvfile1)
+    tempdata2 = get_csv_data(csvfile2)
     # Get the min datetime, rounded down, to set the plot x-axis range
     min_time = tempdata1[0][0]
     min_x_axis = rnddown(min_time, len(str(min_time))-7) 
