@@ -37,48 +37,46 @@ def get_csv_data(csvfile):
         for row in csvreader:
             csvdata.append([js_time(row[0]), c_to_f(float(row[1]))])
     return csvdata
+
+
+def get_max_min(data):
+    """ Get the max and min for the x and y axis """
+    # Get the min datetime, rounded down, to set the plot x-axis range
+    min_time = min(data, key=lambda x: x[0])[0]
+    min_x_axis = rnddown(min_time, len(str(min_time))-7) 
+    # Get the max datetime, rounded up, to set the plot x-axis range
+    max_time = max(data, key=lambda x: x[0])[0]
+    max_x_axis = rndup(max_time, len(str(max_time))-7)  # Returns the max time rounded up
+    # Get the max and  min temperatures for axis min/max setting
+    min_temp = min(data, key=lambda x: x[1])[1]
+    min_y_axis = rnddown(min_temp, 1)
+    max_temp = max(data, key=lambda x: x[1])[1]
+    max_y_axis = rndup(max_temp, 1)
+    return [min_x_axis, max_x_axis], [min_y_axis, max_y_axis]
+
     
 
 def what_is_the_temp(page, csvfile):
-    """ return temperature """
+    """ return rendered template for graphs with one sensor """
     tempdata = get_csv_data(csvfile)
-    # Get the min datetime, rounded down, to set the plot x-axis range
-    min_time = tempdata[0][0]
-    min_x_axis = rnddown(min_time, len(str(min_time))-7) 
-    # Get the max datetime, rounded up, to set the plot x-axis range
-    max_time = tempdata[-1][0]
-    max_x_axis = rndup(max_time, len(str(max_time))-7)  # Returns the max time rounded up
-    # Get the max and  min temperatures for axis min/max setting
-    min_temp = min(tempdata, key=lambda x: x[1])[1]
-    min_y_axis = rnddown(min_temp, 1)
-    max_temp = max(tempdata, key=lambda x: x[1])[1]
-    max_y_axis = rndup(max_temp, 1)
+    x_axis, y_axis = get_max_min(tempdata)
+    print x_axis, y_axis
     return render_template(page, tempdata=tempdata, 
-                           max_x_axis=max_x_axis, min_x_axis=min_x_axis,
-                           max_y_axis=max_y_axis, min_y_axis=min_y_axis)
+                           max_x_axis=x_axis[1], min_x_axis=x_axis[0],
+                           max_y_axis=y_axis[1], min_y_axis=y_axis[0])
 
 
 def what_is_the_temp2(page, csvfile1, csvfile2):
-    """ return temperature """
+    """ return rendered template for graphs with two sensors """
     tempdata1 = get_csv_data(csvfile1)
     tempdata2 = get_csv_data(csvfile2)
-    # Get the min datetime, rounded down, to set the plot x-axis range
-    min_time = tempdata1[0][0]
-    min_x_axis = rnddown(min_time, len(str(min_time))-7) 
-    # Get the max datetime, rounded up, to set the plot x-axis range
-    max_time = tempdata1[-1][0]
-    max_x_axis = rndup(max_time, len(str(max_time))-7)  # Returns the max time rounded up
-    # Get the max and  min temperatures for axis min/max setting
-    min_temp = min(min(tempdata1, key=lambda x: x[1])[1],
-                   min(tempdata2, key=lambda x: x[1])[1]) 
-    min_y_axis = rnddown(min_temp, 1)
-    max_temp = max(max(tempdata1, key=lambda x: x[1])[1],
-                   max(tempdata2, key=lambda x: x[1])[1])
-    max_y_axis = rndup(max_temp, 1)
+    
+    # concatonating both data sets to get the min and max across both
+    x_axis, y_axis = get_max_min(tempdata1 + tempdata2)
+    print x_axis, y_axis
     return render_template(page, tempdata1=tempdata1, tempdata2=tempdata2,
-                           max_x_axis=max_x_axis, min_x_axis=min_x_axis,
-                           max_y_axis=max_y_axis, min_y_axis=min_y_axis)
-
+                           max_x_axis=x_axis[1], min_x_axis=x_axis[0],
+                           max_y_axis=y_axis[1], min_y_axis=y_axis[0])
 
 
 @app.route('/')
