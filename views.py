@@ -85,6 +85,13 @@ def what_is_the_temp2(page, csvfile1, csvfile2):
 @app.route('/')
 def home_page():
     """ return current beer ferm """
+    return what_is_the_temp2('main5.html',
+                             'katies-kitchen-sensor2882E92D6008F.csv',
+                             'katies-kitchen-sensor28FFEB6760144E7.csv')
+
+@app.route('/honeyale')
+def honey_page():
+    """ return current beer ferm """
     return what_is_the_temp2('main4.html',
                              'pauls-house28FF1F51601441F.csv',
                              'pauls-house28FFC81D60144E2.csv')
@@ -101,8 +108,8 @@ def ip_page():
 def sorachi_page():
     """ return current beer ferm """
     return what_is_the_temp2('main3.html',
-                             'katies-kitchen-sensor2882E92D6008F.csv',
-                             'katies-kitchen-sensor28FFEB6760144E7.csv')
+                             'katies-kitchen-sensor2882E92D6008F_sorachi.csv',
+                             'katies-kitchen-sensor28FFEB6760144E7_sorachi.csv')
 
 
 @app.route('/cascade')
