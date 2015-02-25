@@ -3,6 +3,8 @@ import csv
 import json
 from datetime import datetime
 import time
+from database import db_session
+from models import Profile
 
 
 app = Flask(__name__)
